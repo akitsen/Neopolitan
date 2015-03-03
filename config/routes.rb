@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'news/newsarticles'
-
   resources :comments
 
   devise_for :users
