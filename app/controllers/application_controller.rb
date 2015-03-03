@@ -11,4 +11,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :name
   end
 
+  def current_user
+     nil#@current_user ||= User.find(session[:user_id])
+  end 
+
+    def can_administer?
+ 	end
+
 end
