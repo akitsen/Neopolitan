@@ -18,23 +18,14 @@
 @import "bootstrap";
 
 #logo {
-	font-size: 36px;
-	font-weight: 500;
-	font-family: Arial;
-	text-transform: capitalize;
-	letter-spacing: 2px;
-	padding: 15px 5;
-
+	font-size: 26px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: -1px;
+	padding: 15px 0;
 	a {
-		color: #3E87D1;
+		color: #2F363E;
 	}
-}
-
-body {
-    background-image: url("Westmont.jpg");
-	background-size: 125px 150px; 
-	background-repeat: no-repeat;
-    background-position: 2.5% 20%;
 }
 
 #main_content {
@@ -44,11 +35,11 @@ body {
 	padding-bottom: 100px;
 	.link {
 		padding: 2em 1em;
-		border-bottom: 1px solid #2ecc71;
+		border-bottom: 1px solid #e9e9e9;
 		.title {
 
 			a {
-				color: #2ecc71;
+				color: #FF4500;
 			}
 		}
 	}
@@ -58,7 +49,7 @@ body {
 	#comments {
 		.comment {
 			padding: 1em 0;
-			border-top: 1px solid #2ecc71;
+			border-top: 1px solid #E9E9E9;
 			.lead {
 				margin-bottom: 0;
 			}
