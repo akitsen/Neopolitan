@@ -18,13 +18,13 @@
 @import "bootstrap";
 
 #logo {
-	font-size: 26px;
+	font-size: 30px;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: -1px;
 	padding: 15px 0;
 	a {
-		color: #2F363E;
+		color: #0099FF;
 	}
 }
 
@@ -35,11 +35,11 @@
 	padding-bottom: 100px;
 	.link {
 		padding: 2em 1em;
-		border-bottom: 1px solid #e9e9e9;
+		border-bottom: 1px solid #0099FF;
 		.title {
 
 			a {
-				color: #FF4500;
+				color: #0099FF;
 			}
 		}
 	}
@@ -49,7 +49,7 @@
 	#comments {
 		.comment {
 			padding: 1em 0;
-			border-top: 1px solid #E9E9E9;
+			border-top: 1px solid #0099FF;
 			.lead {
 				margin-bottom: 0;
 			}
