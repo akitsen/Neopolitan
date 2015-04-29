@@ -1,7 +1,3 @@
-### Status
-[![Gem Version](https://badge.fury.io/rb/surveyor.svg)](http://badge.fury.io/rb/surveyor)
-[![Build Status](https://travis-ci.org/NUBIC/surveyor.svg)](https://travis-ci.org/NUBIC/surveyor)
-[![Code Climate](https://codeclimate.com/github/NUBIC/surveyor.png)](https://codeclimate.com/github/NUBIC/surveyor)
 
 ## Why surveyor?
 
