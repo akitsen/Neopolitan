@@ -1,5 +1,6 @@
 class ResponseSetUser
   def initialize(user_id)
+    @user = User.find(user_id)
     #find the user.  You can use the commented code below, but switch the model name
     #if your user model is not User.
     #
@@ -7,6 +8,7 @@ class ResponseSetUser
   end
 
   def report_user_name
+    @user ? @user.email : nil
     #return a value to identify users on a report, e.g.:
     #@user ? @user.email : nil
   end
