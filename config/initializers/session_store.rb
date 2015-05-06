@@ -1,3 +1,3 @@
-# Be sure to restart your server when you modify this file.
+# Restart rails server if changes were made.
 
-Rails.application.config.session_store :cookie_store, key: '_raddit_session'
+Rails.application.config.session_store :cookie_store, key: '_neapolitan'

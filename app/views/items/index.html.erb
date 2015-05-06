@@ -1,0 +1,15 @@
+<center>
+<h1> Top Stories & Questions </h1>
+<br>
+
+</center>
+<% content_for :headerwrap do %>
+  <%= render 'components/login_register' %>
+<% end %>
+
+<div class="col-lg-6 col-offset-2">
+<ul class="media-list">
+  <%= render @items %>
+</ul>
+</div>
+

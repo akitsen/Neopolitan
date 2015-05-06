@@ -11,25 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430032415) do
+ActiveRecord::Schema.define(version: 20150506085144) do
 
-  create_table "admins", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "admins", ["email"], name: "index_admins_on_email", unique: true
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -54,31 +39,9 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.string   "display_type"
     t.string   "input_mask"
     t.string   "input_mask_placeholder"
-    t.string   "original_choice"
-    t.boolean  "is_comment",             default: false
-    t.integer  "column_id"
   end
 
-  add_index "answers", ["api_id"], name: "uq_answers_api_id", unique: true
-
-  create_table "columns", force: true do |t|
-    t.integer  "question_group_id"
-    t.text     "text"
-    t.text     "answers_textbox"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "comments", force: true do |t|
-    t.integer  "link_id"
-    t.text     "body"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["link_id"], name: "index_comments_on_link_id"
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+  add_index "answers", ["api_id"], name: "uq_answers_api_id", unique: true, using: :btree
 
   create_table "dependencies", force: true do |t|
     t.integer  "question_id"
@@ -103,18 +66,33 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.string   "response_other"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "column_id"
   end
 
-  create_table "links", force: true do |t|
-    t.string   "title"
-    t.string   "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
+  create_table "item_comments", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "item_id",    null: false
+    t.text     "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "links", ["user_id"], name: "index_links_on_user_id"
+  create_table "items", force: true do |t|
+    t.string   "title",           limit: nil,                 null: false
+    t.string   "url",             limit: nil
+    t.text     "content"
+    t.integer  "user_id",                                     null: false
+    t.boolean  "disabled",                    default: false, null: false
+    t.integer  "comments_count",              default: 0,     null: false
+    t.integer  "upvotes_count",               default: 0,     null: false
+    t.integer  "downvotes_count",             default: 0,     null: false
+    t.integer  "score",                       default: 0,     null: false
+    t.integer  "rank",                        default: 0,     null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+  end
+
+  add_index "items", ["disabled"], name: "index_items_on_disabled", using: :btree
+  add_index "items", ["user_id"], name: "index_items_on_user_id", using: :btree
 
   create_table "question_groups", force: true do |t|
     t.text     "text"
@@ -131,7 +109,7 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.string   "api_id"
   end
 
-  add_index "question_groups", ["api_id"], name: "uq_question_groups_api_id", unique: true
+  add_index "question_groups", ["api_id"], name: "uq_question_groups_api_id", unique: true, using: :btree
 
   create_table "questions", force: true do |t|
     t.integer  "survey_section_id"
@@ -154,15 +132,9 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.datetime "updated_at"
     t.integer  "correct_answer_id"
     t.string   "api_id"
-    t.boolean  "modifiable",             default: true
-    t.boolean  "dynamically_generate",   default: false
-    t.string   "dummy_blob"
-    t.string   "dynamic_source"
-    t.string   "report_code"
-    t.boolean  "is_comment",             default: false
   end
 
-  add_index "questions", ["api_id"], name: "uq_questions_api_id", unique: true
+  add_index "questions", ["api_id"], name: "uq_questions_api_id", unique: true, using: :btree
 
   create_table "response_sets", force: true do |t|
     t.integer  "user_id"
@@ -173,11 +145,10 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "api_id"
-    t.boolean  "test_data",    default: false
   end
 
-  add_index "response_sets", ["access_code"], name: "response_sets_ac_idx", unique: true
-  add_index "response_sets", ["api_id"], name: "uq_response_sets_api_id", unique: true
+  add_index "response_sets", ["access_code"], name: "response_sets_ac_idx", unique: true, using: :btree
+  add_index "response_sets", ["api_id"], name: "uq_response_sets_api_id", unique: true, using: :btree
 
   create_table "responses", force: true do |t|
     t.integer  "response_set_id"
@@ -195,19 +166,10 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.datetime "updated_at"
     t.integer  "survey_section_id"
     t.string   "api_id"
-    t.string   "blob"
-    t.integer  "column_id"
   end
 
-  add_index "responses", ["api_id"], name: "uq_responses_api_id", unique: true
-  add_index "responses", ["survey_section_id"], name: "index_responses_on_survey_section_id"
-
-  create_table "rows", force: true do |t|
-    t.integer  "question_group_id"
-    t.string   "text"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "responses", ["api_id"], name: "uq_responses_api_id", unique: true, using: :btree
+  add_index "responses", ["survey_section_id"], name: "index_responses_on_survey_section_id", using: :btree
 
   create_table "survey_sections", force: true do |t|
     t.integer  "survey_id"
@@ -221,7 +183,6 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.string   "custom_class"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "modifiable",             default: true
   end
 
   create_table "survey_translations", force: true do |t|
@@ -249,31 +210,34 @@ ActiveRecord::Schema.define(version: 20150430032415) do
     t.integer  "display_order"
     t.string   "api_id"
     t.integer  "survey_version",         default: 0
-    t.boolean  "template",               default: false
-    t.integer  "user_id"
   end
 
-  add_index "surveys", ["access_code", "survey_version"], name: "surveys_access_code_version_idx", unique: true
-  add_index "surveys", ["api_id"], name: "uq_surveys_api_id", unique: true
+  add_index "surveys", ["access_code", "survey_version"], name: "surveys_access_code_version_idx", unique: true, using: :btree
+  add_index "surveys", ["api_id"], name: "uq_surveys_api_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "username",             limit: nil,                 null: false
+    t.string   "crypted_password",     limit: nil
+    t.string   "salt",                 limit: nil
+    t.boolean  "admin",                            default: false, null: false
+    t.boolean  "disabled",                         default: false, null: false
+    t.integer  "karma",                            default: 0,     null: false
+    t.text     "about"
+    t.string   "auth",                 limit: nil
+    t.string   "token",                limit: nil
+    t.datetime "karma_increment_time"
+    t.datetime "pwd_reset"
+    t.integer  "replies_count",                    default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["auth", "token"], name: "index_users_on_auth_and_token", using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "validation_conditions", force: true do |t|
     t.integer  "validation_id"
@@ -302,18 +266,13 @@ ActiveRecord::Schema.define(version: 20150430032415) do
   end
 
   create_table "votes", force: true do |t|
-    t.integer  "votable_id"
-    t.string   "votable_type"
-    t.integer  "voter_id"
-    t.string   "voter_type"
-    t.boolean  "vote_flag"
-    t.string   "vote_scope"
-    t.integer  "vote_weight"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "user_id",                  null: false
+    t.integer  "votable_id",               null: false
+    t.string   "votable_type", limit: nil, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
-  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+  add_index "votes", ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true, using: :btree
 
 end

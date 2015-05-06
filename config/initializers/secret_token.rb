@@ -1,0 +1,1 @@
+NEAPOLITAN::Application.config.secret_key_base = '<4a618a56e85a002f671131b18b6c9c22ec5031f6e319b5fcfed2e086dca62528e76b4246f9afc342d24182d7a874d33e82e3c40c81f6b1c91befb957ef8180c5>'

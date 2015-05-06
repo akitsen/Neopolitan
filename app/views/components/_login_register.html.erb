@@ -1,0 +1,20 @@
+<% if current_user && logged_in? %>
+ 
+<% else %>
+  <div id="headerwrap">
+    <div class="container alert alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+          <h1>Neapolitan! - The Westmont Space</h1>
+
+          <h2>Ask - Share - Contribute</h2>
+          <h5>Sign up and begin your journey!</h5>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

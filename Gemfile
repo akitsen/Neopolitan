@@ -1,20 +1,43 @@
+ruby '2.1.5'
 source 'https://rubygems.org'
-ruby '2.2.2'
 
-gem 'rails', '4.1.5'
-gem 'sass-rails', '~> 4.0.3'
-gem 'bootstrap-sass', '~> 3.2.0.2'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'paperclip', '~> 4.1'
+
+gem 'bootstrap-sass', '~> 3.3.3'
 gem 'jquery-rails'
-gem 'turbolinks'
-gem 'devise'
-gem 'acts_as_votable', '~> 0.10.0'
-gem 'simple_form', '~> 3.0.2'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
-gem 'sqlite3'
-gem 'surveyor', github: 'NUBIC/surveyor'
-gem 'surveyor_gui'
-gem "therubyracer"
+gem 'pg'
+gem 'rails', '4.0.0'
+gem 'rails_12factor', group: :production
+gem 'simple_form', '3.1.0'
+gem 'sorcery', '0.9.0'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'validate_url'
+gem 'surveyor', github: 'caboteria/surveyor', branch: 'rails4'
+# This allows us to import bower packages
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap-material-design'
+end
+
+
+
+group :development, :test do
+  gem 'dotenv-rails'
+
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
+
+
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'pry'
+  #gem 'rspec-rails', '~> 3.0' # https://github.com/rspec/rspec-rails
+  #gem 'rspec_api_documentation' # https://github.com/zipmark/rspec_api_documentation
+  gem 'shoulda-matchers'
+
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console', '~> 2.0'
+end

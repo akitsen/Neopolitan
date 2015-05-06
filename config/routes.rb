@@ -1,17 +1,25 @@
+
 Rails.application.routes.draw do
-  devise_for :admins
-  mount SurveyorGui::Engine => "/surveys_admin", :as => "surveyor_gui"
   mount Surveyor::Engine => "/surveys", :as => "surveyor"
-  resources :comments
-
-  devise_for :users
-  resources :links do
+  resources :items, except: [:destroy] do
+    resources :item_comments
     member do
-      put "like", to:    "links#upvote"
-      put "dislike", to: "links#downvote"
+      post :toggle
+      post :vote, to: 'user_item_votes#create'
+      delete :vote, to: 'user_item_votes#destroy'
     end
-    resources :comments
   end
-  root "links#index"
 
+  root to: 'items#index'
+
+  resources :users, except: [:index]
+  resources :user_sessions, only: [:new, :create, :destroy]
+
+  get 'login' => 'user_sessions#new', as: :login
+  match 'logout' => 'user_sessions#destroy', as: :logout, via: [:get, :post]
+
+  namespace :admin do
+    root to: 'items#index'
+    resources :items
+  end
 end

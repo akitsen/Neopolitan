@@ -1,0 +1,11 @@
+<%= simple_form_for(@item) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :title, placeholder: "Create a title" %>
+  <%= f.input :url, as: :url, label: false, placeholder: "Share a link" %>
+  <div>or</div>
+  <%= f.input :content, as: :text, label: false, placeholder: "Ask a Question" %>
+  <div>Leave URL blank if you are asking a question.</div>
+
+  <%= f.button :submit %>
+<% end %>
